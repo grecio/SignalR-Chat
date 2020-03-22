@@ -2,38 +2,41 @@
 @model RegisterViewModel
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Registrar";
 }
 
-<div class="lr-container register-container">
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <h4>Create a new account.</h4>
-        <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Username" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm Password" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control", @placeholder = "Display Name" })
-            </div>
-        </div>
+    <div class="lr-container register-container">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Criar Uma Nova Conta</h4>
+            <hr />
 
-        @*<div class="form-group">
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control", @placeholder = "Seu Nome" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Login" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Senha" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirmar Senha" })
+                </div>
+            </div>
+
+
+            @*<div class="form-group">
                 <div class="col-md-12">
                     @Html.TextBoxFor(m => m.Avatar, new { @class = "form-control" })
                 </div>
@@ -41,7 +44,7 @@
 
             <div class="form-group">
                 <div class="col-md-12">
-                <p>Select your Avatar</p>
+                    <p>Select your Avatar</p>
                     <label>
                         @Html.RadioButtonFor(m => m.Avatar, "0", new { @checked = true })
                         <img class="avatar-icon" src="~/Content/icons/avatar1.png" alt="" />
@@ -62,15 +65,15 @@
             </div>
 
 
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="submit" class="btn btn-default btn-register" value="Register" />
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" class="btn btn-default btn-register" value="Registrar" />
+                </div>
             </div>
-        </div>
-    }
+        }
 
-    @Html.ActionLink("Already have an Account?", "Login", "Account")
-</div>
+        @Html.ActionLink("Já Possui Uma Conta?", "Login", "Account")
+    </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -2,7 +2,7 @@
 @model LoginViewModel
 
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "Login";
 }
 
 <div class="lr-container login-container">
@@ -14,13 +14,13 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     <div class="col-md-12">
-                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Username" })
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Informe seu Nome" })
                         @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Informe uma Senha" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -34,11 +34,11 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <input type="submit" value="Sign in" class="btn btn-default btn-signin" />
+                        <input type="submit" value="Entrar" class="btn btn-default btn-signin" />
                     </div>
                 </div>
             }
-        @Html.ActionLink("Don't have an Account?", "Register", "Account")
+        @Html.ActionLink("Registre-se", "Register", "Account")
     </div>
 </div>
 

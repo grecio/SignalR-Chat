@@ -94,7 +94,7 @@ namespace Chat.Web.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Usuário ou Senha Inválidos.");
                     return View(model);
 
             }
@@ -192,7 +192,15 @@ namespace Chat.Web.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error);
+                if (error.ToLowerInvariant().Contains("taken"))
+                {
+                    ModelState.AddModelError("", "Login informado já existe");
+                }
+                else
+                {
+                    ModelState.AddModelError("", error);
+                }
+                
             }
         }
 

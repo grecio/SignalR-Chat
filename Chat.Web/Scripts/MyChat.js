@@ -5,7 +5,7 @@
         console.log("SignalR started");
         model.roomList();
         model.userList();
-        model.joinedRoom = "Lobby";
+        model.joinedRoom = "CODIN";
         model.joinRoom();
     });
 
@@ -158,12 +158,12 @@
             chatHub.server.getMessageHistory(self.joinedRoom).done(function (result) {
                 self.chatMessages.removeAll();
                 for (var i = 0; i < result.length; i++) {
-                    var isMine = result[i].From == self.myName();
+                    var isMine = result[i].From === self.myName();
                     self.chatMessages.push(new ChatMessage(result[i].Content,
-                                                     result[i].Timestamp,
-                                                     result[i].From,
-                                                     isMine,
-                                                     result[i].Avatar))
+                        result[i].Timestamp,
+                        result[i].From,
+                        isMine,
+                        result[i].Avatar));
                 }
 
                 $(".chat-body").animate({ scrollTop: $(".chat-body")[0].scrollHeight }, 1000);

@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Collections.Generic;
+using System.Web;
 using System.Web.Optimization;
 
 namespace Chat.Web
@@ -8,8 +9,17 @@ namespace Chat.Web
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+
+            var bundle = new Bundle("~/bundles/jquery");
+
+            bundle.Orderer = new AsIsBundleOrderer();
+            bundle
+                .Include("~/Scripts/jquery-{version}.js")
+                .Include("~/Scripts/jquery.meiomask.js")
+                .Include("~/Scripts/jquery-mascaras.js");
+
+            bundles.Add(bundle);
+
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -26,6 +36,15 @@ namespace Chat.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+        }
+
+        public class AsIsBundleOrderer : IBundleOrderer
+        {
+          
+            public IEnumerable<BundleFile> OrderFiles(BundleContext context, IEnumerable<BundleFile> files)
+            {
+                return files;
+            }
         }
     }
 }

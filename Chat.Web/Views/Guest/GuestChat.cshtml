@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "Bem vindo";
+}
+
+@section scripts {
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+    <script src="~/Scripts/knockout-3.4.2.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/MyChat.js"></script>
+    <script src="~/Scripts/MyScript.js"></script>
+    <script src="~/signalr/hubs"></script>
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+
+
+            <div class="panel panel-primary">
+                <div class="panel-heading bg-primary">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h5 id="joinedRoom">Sala de Espera</h5>
+                        </div>
+                        <div class="col-md-1 text-right">
+                            @Html.ActionLink("Salr", "LogOff", "Guest", null, new { id = "btn-sair", @class = "btn btn-primary hidden-xs" })
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <form name="form">
+
+                    <div class="panel-body fixed-panel">
+                        <div class="row m-t-2">
+                            <div class="col-md-10 w-100 p-3 better-scrollbar chat-body">
+                                <ul data-bind="foreach: chatMessages">
+                                    <li>
+                                        <div class="chat-message" data-bind="css: $data.isMine() === true ? 'ismine' : 'isother'">
+                                            <div class="left-side">
+                                                <img src="~/Content/icons/avatar1.png" class="message-avatar" data-bind="attr: { src: $data.avatar }" />
+                                            </div>
+                                            <div class="message-content">
+                                                <span class="author" data-bind="text:$data.from"></span>
+                                                <span class="timestamp">
+                                                    <i class="glyphicon glyphicon-time"></i>
+                                                    <span data-bind="text:$data.timestamp"></span>
+                                                </span>
+                                                <span class="content" data-bind="html:$data.content"></span>
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer">
+
+                        <input id="chat-message" class="form-control" type="text" value="" data-bind="value:message, valueUpdate: 'afterkeydown', event: { keypress: onEnter }" placeholder="Digite uma mensagem" />
+
+                        @*<div class="row">
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-4">
+                <div class="chat-input">
+
+                    <div class="actions">
+                        <label for="btnUpload" class="custom-file-upload">
+                            <img src="~/Content/icons/photo1.png" alt="" />
+                        </label>
+                        <input type="file" id="btnUpload" accept="image/*" name="files" />
+                        <a id="emojibtn" href="#"><img src="~/Content/icons/smile1.png" /></a>
+                    </div>
+                    <div class="emoticon-container hidden" id="emojis-container">
+                        <a href="#">
+                            <input type="hidden" value=":)" />
+                            <img src="~/Content/emojis/emoji1.png" />
+                        </a>
+                        <a href="#">
+                            <input type="hidden" value=":P" />
+                            <img src="~/Content/emojis/emoji2.png" />
+                        </a>
+                        <a href="#">
+                            <input type="hidden" value=":O" />
+                            <img src="~/Content/emojis/emoji3.png" />
+                        </a>
+                        <a href="#">
+                            <input type="hidden" value=":-)" />
+                            <img src="~/Content/emojis/emoji4.png" />
+                        </a>
+                        <a href="#">
+                            <input type="hidden" value="B|" />
+                            <img src="~/Content/emojis/emoji5.png" />
+                        </a>
+                        <a href="#">
+                            <input type="hidden" value=":D" />
+                            <img src="~/Content/emojis/emoji6.png" />
+                        </a>
+                        <a href="#">
+                            <input type="hidden" value="<3" />
+                            <img src="~/Content/emojis/emoji7.png" />
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>*@
+
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="alert alert-dismissible alert-warning hidden" id="errorAlert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <p data-bind="text:serverInfoMessage"></p>
+</div>

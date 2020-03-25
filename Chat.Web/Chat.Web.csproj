@@ -175,6 +175,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GuestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -182,6 +183,7 @@
     <Compile Include="Helpers\BasicEmojis.cs" />
     <Compile Include="Helpers\FileValidator.cs" />
     <Compile Include="Helpers\StaticResources.cs" />
+    <Compile Include="Helpers\Util.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Mappings\MessageProfile.cs" />
     <Compile Include="Mappings\RoomProfile.cs" />
@@ -192,6 +194,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CustomValidationCPFAttribute.cs" />
+    <Compile Include="Models\GuestViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Room.cs" />
@@ -217,6 +221,8 @@
     <Content Include="Content\icons\avatar4.png" />
     <Content Include="Content\icons\photo1.png" />
     <Content Include="Content\icons\smile1.png" />
+    <Content Include="Content\img\gov-logo.png" />
+    <Content Include="Content\img\uvt-logo.png" />
     <Content Include="Content\screenshots\android.png" />
     <Content Include="Content\screenshots\desktop.png" />
     <Content Include="Content\screenshots\laptop.png" />
@@ -225,21 +231,23 @@
     <Content Include="Content\Site.min.css">
       <DependentUpon>Site.css</DependentUpon>
     </Content>
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\Site.less" />
     <Content Include="Content\Site.css.map">
       <DependentUpon>Site.css</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\wtt.pubxml" />
+    <None Include="Properties\PublishProfiles\homolog.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-mascaras.js" />
+    <Content Include="Scripts\jquery.meiomask.js" />
     <Content Include="Scripts\jquery.signalR-2.2.1.js" />
     <Content Include="Scripts\jquery.signalR-2.2.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -272,6 +280,10 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Guest\Index.cshtml" />
+    <Content Include="Views\Guest\Login.cshtml" />
+    <Content Include="Views\Guest\GuestChat.cshtml" />
+    <Content Include="Views\Account\ClerkChat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

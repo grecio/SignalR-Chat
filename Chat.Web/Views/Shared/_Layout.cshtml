@@ -9,11 +9,30 @@
 
 </head>
 <body>
-
-    <div class="container body-content">
-        @RenderBody()
+    <div class="gov-header bg-primary hidden-print">
+        <div class="container">
+            <a href="http://www.set.rn.gov.br/" target="_blank">
+                <img src="~/Content/img/gov-logo.png" title="Governo do Estado do RN" alt="" />
+                <strong>Governo do Estado do RN</strong>
+                | Secretaria de Tributação - SET
+            </a>
+        </div>
     </div>
 
+    <header class="container">
+        <a href="#/home"><img src="~/Content/img/uvt-logo.png" alt="Unidade Virtual de Tributação" /></a>
+        <div class="pull-right text-right">
+            <h2>UVT - Chat</h2>
+            <br />
+            <h5>Fale com nossos atendentes online.</h5>
+        </div>
+    </header>
+
+    <section>
+        @RenderBody()
+    </section>
+
+   
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

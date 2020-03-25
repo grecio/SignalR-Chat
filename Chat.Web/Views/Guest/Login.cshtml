@@ -1,0 +1,69 @@
+﻿@using Chat.Web.Models
+@model GuestViewModel
+
+@{
+    ViewBag.Title = "Bem Vindo, Identifique-se";
+}
+
+<div class="lr-container login-container">
+    <div class="row">
+
+        <div class="col-md-12">
+
+            @using (Html.BeginForm("Login", "Guest", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(m => m.Cpf, new { @class = "form-control mask-CPF", @placeholder = "Informe seu CPF" })
+                        @Html.ValidationMessageFor(m => m.Cpf, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control", @placeholder = "Informe seu Nome" })
+                        @Html.ValidationMessageFor(m => m.DisplayName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <p>Selecione seu Avatar</p>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Avatar, "0", new { @checked = true })
+                            <img class="avatar-icon" src="~/Content/icons/avatar1.png" alt="" />
+                        </label>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Avatar, "1")
+                            <img class="avatar-icon" src="~/Content/icons/avatar2.png" alt="" />
+                        </label>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Avatar, "2")
+                            <img class="avatar-icon" src="~/Content/icons/avatar3.png" alt="" />
+                        </label>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Avatar, "3")
+                            <img class="avatar-icon" src="~/Content/icons/avatar4.png" alt="" />
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="submit" value="Entrar" class="btn btn-default btn-signin" />
+                    </div>
+                </div>
+            }
+
+        </div>
+
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

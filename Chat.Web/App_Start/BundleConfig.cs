@@ -14,9 +14,7 @@ namespace Chat.Web
 
             bundle.Orderer = new AsIsBundleOrderer();
             bundle
-                .Include("~/Scripts/jquery-{version}.js")
-                .Include("~/Scripts/jquery.meiomask.js")
-                .Include("~/Scripts/jquery-mascaras.js");
+                .Include("~/Scripts/jquery-{version}.js");
 
             bundles.Add(bundle);
 

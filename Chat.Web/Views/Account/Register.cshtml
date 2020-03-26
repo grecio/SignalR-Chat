@@ -5,75 +5,82 @@
     ViewBag.Title = "Registrar";
 }
 
-    <div class="lr-container register-container">
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            <h4>Criar Uma Nova Conta</h4>
-            <hr />
 
-            @Html.ValidationSummary("", new { @class = "text-danger" })
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
 
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control", @placeholder = "Seu Nome" })
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Criar Uma Nova Conta</h4>
+                <hr />
+
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control", @placeholder = "Seu Nome" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Login" })
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Login" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Senha" })
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Senha" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirmar Senha" })
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirmar Senha" })
+                    </div>
                 </div>
-            </div>
 
 
-            @*<div class="form-group">
+                @*<div class="form-group">
                 <div class="col-md-12">
                     @Html.TextBoxFor(m => m.Avatar, new { @class = "form-control" })
                 </div>
             </div>*@
 
-            <div class="form-group">
-                <div class="col-md-12">
-                    <p>Select your Avatar</p>
-                    <label>
-                        @Html.RadioButtonFor(m => m.Avatar, "0", new { @checked = true })
-                        <img class="avatar-icon" src="~/Content/icons/avatar1.png" alt="" />
-                    </label>
-                    <label>
-                        @Html.RadioButtonFor(m => m.Avatar, "1")
-                        <img class="avatar-icon" src="~/Content/icons/avatar2.png" alt="" />
-                    </label>
-                    <label>
-                        @Html.RadioButtonFor(m => m.Avatar, "2")
-                        <img class="avatar-icon" src="~/Content/icons/avatar3.png" alt="" />
-                    </label>
-                    <label>
-                        @Html.RadioButtonFor(m => m.Avatar, "3")
-                        <img class="avatar-icon" src="~/Content/icons/avatar4.png" alt="" />
-                    </label>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <p>Select your Avatar</p>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Avatar, "0", new { @checked = true })
+                            <img class="avatar-icon" src="~/Content/icons/avatar1.png" alt="" />
+                        </label>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Avatar, "1")
+                            <img class="avatar-icon" src="~/Content/icons/avatar2.png" alt="" />
+                        </label>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Avatar, "2")
+                            <img class="avatar-icon" src="~/Content/icons/avatar3.png" alt="" />
+                        </label>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Avatar, "3")
+                            <img class="avatar-icon" src="~/Content/icons/avatar4.png" alt="" />
+                        </label>
+                    </div>
                 </div>
-            </div>
 
 
-            <div class="form-group">
-                <div class="col-md-12">
-                    <input type="submit" class="btn btn-default btn-register" value="Registrar" />
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="submit" class="btn btn-default btn-register" value="Registrar" />
+                    </div>
                 </div>
-            </div>
-        }
+            }
 
-        @Html.ActionLink("Já Possui Uma Conta?", "Login", "Account")
+            @Html.ActionLink("Já Possui Uma Conta?", "Login", "Account")
+
+        </div>
     </div>
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

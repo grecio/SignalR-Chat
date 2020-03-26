@@ -8,7 +8,6 @@
         console.log("SignalR started");
         model.roomList();
         model.userList();
-        model.getNextRoomName();
 
     });
 

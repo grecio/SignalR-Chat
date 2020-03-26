@@ -178,6 +178,24 @@ namespace Chat.Web.Hubs
             }
         }
 
+        public void getNextRoomName()
+        {
+            try
+            {
+                var room = string.Empty;
+                using (var db = new ApplicationDbContext())
+                {
+                    room =  $"SLA{(db.Rooms.Count() + 1).ToString("000000")}"; 
+                }
+
+                Clients.Caller.onGetNextRoomName(room);
+            }
+            catch (Exception ex)
+            {
+                Clients.Caller.onError("Couldn't create chat room: " + ex.Message);
+            }
+        }
+
         public void DeleteRoom(string roomName)
         {
             try
@@ -264,7 +282,7 @@ namespace Chat.Web.Hubs
                 }
                 catch (Exception ex)
                 {
-                    Clients.Caller.onError("OnConnected:" + ex.Message);
+                   // Clients.Caller.onError("OnConnected:" + ex.Message);
                 }
             }
 
@@ -294,8 +312,14 @@ namespace Chat.Web.Hubs
 
         public override Task OnReconnected()
         {
-            var user = _Connections.Where(u => u.Username == IdentityName).First();
-            Clients.Caller.getProfileInfo(user.DisplayName, user.Avatar);
+            var user = _Connections.Where(u => u.Username == IdentityName).Any() ? _Connections.Where(u => u.Username == IdentityName).First() : null;
+
+            if (user != null)
+            {
+
+                Clients.Caller.getProfileInfo(user.DisplayName, user.Avatar);
+
+            }
 
             return base.OnReconnected();
         }

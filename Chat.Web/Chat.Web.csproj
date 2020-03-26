@@ -257,6 +257,7 @@
     <Content Include="Scripts\knockout-3.4.2.debug.js" />
     <Content Include="Scripts\knockout-3.4.2.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\MyClerkChat.js" />
     <Content Include="Scripts\MyChat.js" />
     <Content Include="Scripts\MyScript.js" />
     <Content Include="Scripts\respond.js" />

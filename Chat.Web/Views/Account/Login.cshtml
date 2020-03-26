@@ -2,44 +2,51 @@
 @model LoginViewModel
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Login Atendente";
 }
 
-<div class="lr-container login-container">
-    <div class="col-md-12">
-            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Informe seu Nome" })
-                        @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Informe uma Senha" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="box box-primary">
+                <!-- Initial sign in panel state -->
+                <div class="box-body box-body-padding p-b-0">
+                    <h2 class="box-title text-primary">Identifique-se</h2>
+                    <br />
+                    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Informe sua matricula" })
+                                @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="submit" value="Entrar" class="btn btn-default btn-signin" />
+                            </div>
+                        </div>
+                    }
+
+
+                    @Html.ActionLink("Não tem uma conta?", "Register", "Account")
+
                 </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="submit" value="Entrar" class="btn btn-default btn-signin" />
-                    </div>
-                </div>
-            }
-        @Html.ActionLink("Registre-se", "Register", "Account")
+            </div>
+        </div>
     </div>
+
 </div>
 
 @section Scripts {

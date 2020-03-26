@@ -1,0 +1,353 @@
+﻿@{
+    ViewBag.Title = "Área do Atendente";
+}
+
+@section scripts {
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.meiomask.js"></script>
+    <script src="~/Scripts/jquery-mascaras.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+    <script src="~/Scripts/knockout-3.4.2.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/MyClerkChat.js"></script>
+    <script src="~/Scripts/MyScript.js"></script>
+    <script src="~/signalr/hubs"></script>
+}
+
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <p class="navbar-text" data-bind="text: myName">Carregando dados do atendente...</p>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Atendimento<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:;">Sair</a></li>
+                            @*<li><a href="javascript:;" data-target="#create-room-modal" data-toggle="modal">Nova Sala</a></li>*@
+                        </ul>
+                    </li>
+                </ul>
+
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="row">
+        <div class="col-md-2">
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Salas de Atendimento</div>
+                        <div class="panel-body fixed-panel">
+
+                            <ul class="list-group" data-bind="foreach: chatRooms" id="room-list">
+                                <li class="list-group-item"><a href="javascript:;" data-bind="text: $data.name, clickLink: joinRoom"></a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            @*<div class="header">
+                    <h5>Salas de Atendimento</h5>
+
+                </div>
+                <div class="rooms">
+                    <div>
+                        <ul id="room-list" data-bind="foreach: chatRooms">
+                            <li><a href="#" data-bind="text: $data.name, clickLink: joinRoom"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="user">
+                    <div class="user-avatar">
+                        <img class="avatar-icon2" src="~/Content/icons/avatar1.png" data-bind="attr: { src: myAvatar() }" />
+                    </div>
+                    <div class="user-name">
+                        <a href="#" data-bind="text: myName"></a>
+                    </div>
+                    <div class="user-signout">
+                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <a href="javascript:document.getElementById('logoutForm').submit()" title="Sign Out"><span class="glyphicon glyphicon-log-out"></span></a>
+                        }
+                    </div>
+                </div>*@
+
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading bg-primary">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 id="joinedRoom"></h5>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            @Html.ActionLink("Encerrar Atendimento", "LogOff", "Account", null, new { id = "btn-sair", @class = "btn btn-danger btn-sm" })
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="panel-body fixed-panel" id="chat-panel">
+                    <div class="row m-t-2">
+                        <div class="col-md-10 w-100 p-3 better-scrollbar chat-body">
+                            <ul data-bind="foreach: chatMessages">
+                                <li>
+                                    <div class="chat-message" data-bind="css: $data.isMine() === true ? 'ismine' : 'isother'">
+                                        <div class="left-side">
+                                            <img src="~/Content/icons/avatar1.png" class="message-avatar" data-bind="attr: { src: $data.avatar }" />
+                                        </div>
+                                        <div class="message-content">
+                                            <span class="author" data-bind="text:$data.from"></span>
+                                            <span class="timestamp">
+                                                <i class="glyphicon glyphicon-time"></i>
+                                                <span data-bind="text:$data.timestamp"></span>
+                                            </span>
+                                            <span class="content" data-bind="html:$data.content"></span>
+                                        </div>
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input id="chat-message" class="form-control" type="text" value="" data-bind="value:message, valueUpdate: 'afterkeydown', event: { keypress: onEnter }" placeholder="Digite uma mensagem" />
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-primary" data-bind="click: sendNewMessage">Enviar</button>
+                        </div>
+                    </div>
+
+
+                    @*<div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="chat-input">
+
+                                    <div class="actions">
+                                        <label for="btnUpload" class="custom-file-upload">
+                                            <img src="~/Content/icons/photo1.png" alt="" />
+                                        </label>
+                                        <input type="file" id="btnUpload" accept="image/*" name="files" />
+                                        <a id="emojibtn" href="#"><img src="~/Content/icons/smile1.png" /></a>
+                                    </div>
+                                    <div class="emoticon-container hidden" id="emojis-container">
+                                        <a href="#">
+                                            <input type="hidden" value=":)" />
+                                            <img src="~/Content/emojis/emoji1.png" />
+                                        </a>
+                                        <a href="#">
+                                            <input type="hidden" value=":P" />
+                                            <img src="~/Content/emojis/emoji2.png" />
+                                        </a>
+                                        <a href="#">
+                                            <input type="hidden" value=":O" />
+                                            <img src="~/Content/emojis/emoji3.png" />
+                                        </a>
+                                        <a href="#">
+                                            <input type="hidden" value=":-)" />
+                                            <img src="~/Content/emojis/emoji4.png" />
+                                        </a>
+                                        <a href="#">
+                                            <input type="hidden" value="B|" />
+                                            <img src="~/Content/emojis/emoji5.png" />
+                                        </a>
+                                        <a href="#">
+                                            <input type="hidden" value=":D" />
+                                            <img src="~/Content/emojis/emoji6.png" />
+                                        </a>
+                                        <a href="#">
+                                            <input type="hidden" value="<3" />
+                                            <img src="~/Content/emojis/emoji7.png" />
+                                        </a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>*@
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-2">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">Usuários Conectados</div>
+                <div class="panel-body">
+
+                    <ul class="list-group" data-bind="foreach: filteredChatUsers" id="user-list">
+                        <li class="list-group-item"><a href="javascript:;" data-bind="text: $data.displayName"></a><input type="hidden" class="username" data-bind="value:$data.userName" /></li>
+
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <input type="text" class="form-control" placeholder="Pesquisar..." data-bind="value: filter, valueUpdate: 'afterkeydown'" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CREATE ROOM MODAL -->
+    <div class="modal" tabindex="-1" role="dialog" id="create-room-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar Sala de Atendimento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="roomName" placeholder="Nome da Sala de Atendimento">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: createRoom">Criar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- REMOVE ROOM MODAL -->
+    <div class="modal" tabindex="-1" role="dialog" id="remove-room-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remover Sala de Atendimento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Remover Sala</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Deseja Remover esta Sala de Atendimento?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: deleteRoom">Sim</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@*<div class="row main-container">
+        <div class="col-md-2 left">
+        </div>
+        <div class="col-md-7 middle">
+            <div class="chat-header">
+                <h5 id="joinedRoom">Lobby</h5>
+                <button data-toggle="modal" data-target="#remove-room-modal" class="btnDeleteRoom glyphicon glyphicon-remove"></button>
+            </div>
+            <div class="chat-body better-scrollbar">
+                <ul data-bind="foreach: chatMessages">
+                    <li>
+                        <div class="chat-message" data-bind="css: $data.isMine() === true ? 'ismine' : 'isother'">
+                            <div class="left-side">
+                                <img src="~/Content/icons/avatar1.png" class="message-avatar" data-bind="attr: { src: $data.avatar }" />
+                            </div>
+                            <div class="message-content">
+                                <span class="author" data-bind="text:$data.from"></span>
+                                <span class="timestamp">
+                                    <i class="glyphicon glyphicon-time"></i>
+                                    <span data-bind="text:$data.timestamp"></span>
+                                </span>
+                                <span class="content" data-bind="html:$data.content"></span>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="chat-input">
+                <i class="glyphicon glyphicon-send"></i>
+                <div class="actions">
+                    <label for="btnUpload" class="custom-file-upload">
+                        <img src="~/Content/icons/photo1.png" alt="" />
+                    </label>
+                    <input type="file" id="btnUpload" accept="image/*" name="files" />
+                    <a id="emojibtn" href="#"><img src="~/Content/icons/smile1.png" /></a>
+                </div>
+                <div class="emoticon-container hidden" id="emojis-container">
+                    <a href="#">
+                        <input type="hidden" value=":)" />
+                        <img src="~/Content/emojis/emoji1.png" />
+                    </a>
+                    <a href="#">
+                        <input type="hidden" value=":P" />
+                        <img src="~/Content/emojis/emoji2.png" />
+                    </a>
+                    <a href="#">
+                        <input type="hidden" value=":O" />
+                        <img src="~/Content/emojis/emoji3.png" />
+                    </a>
+                    <a href="#">
+                        <input type="hidden" value=":-)" />
+                        <img src="~/Content/emojis/emoji4.png" />
+                    </a>
+                    <a href="#">
+                        <input type="hidden" value="B|" />
+                        <img src="~/Content/emojis/emoji5.png" />
+                    </a>
+                    <a href="#">
+                        <input type="hidden" value=":D" />
+                        <img src="~/Content/emojis/emoji6.png" />
+                    </a>
+                    <a href="#">
+                        <input type="hidden" value="<3" />
+                        <img src="~/Content/emojis/emoji7.png" />
+                    </a>
+                </div>
+                <input id="chat-message" type="text" value="" data-bind="value:message, valueUpdate: 'afterkeydown', event: { keypress: onEnter }" placeholder="Digite uma mensagem" />
+            </div>
+        </div>
+        <div class="col-md-3 right">
+            <div class="header">
+                <h5>Conectados (<span data-bind="text: filteredChatUsers().length">0</span>)</h5>
+            </div>
+            <div class="chat-users better-scrollbar">
+                <ul id="user-list" data-bind="foreach: filteredChatUsers">
+                    <li>
+                        <div class="user-inner">
+                            <div class="left-side">
+                                <img src="~/Content/icons/avatar1.png" data-bind="attr: { src:$data.avatar }" class="user-avatar" />
+                            </div>
+                            <div class="right-side">
+                                <input type="hidden" class="username" data-bind="value:$data.userName" />
+                                <span class="author" data-bind="text: $data.displayName"></span>
+                                <small data-bind="text: $data.device"></small>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="search-user">
+                <input type="text" class="" placeholder="Pesquisar..." data-bind="value: filter, valueUpdate: 'afterkeydown'" />
+            </div>
+        </div>
+    </div>*@
+
+
+
+<div class="alert alert-dismissible alert-warning hidden" id="errorAlert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <p data-bind="text:serverInfoMessage"></p>
+</div>
+
